@@ -1,0 +1,422 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={You Are What You Eat: An analysis of the efficacy of folic acid food fortification initiatives on the prevalence of neural tube defects in newborns},
+            pdfauthor={Chad Ikeda},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{You Are What You Eat: An analysis of the efficacy of folic acid food
+fortification initiatives on the prevalence of neural tube defects in
+newborns}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Chad Ikeda}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \date{}
+  \predate{}\postdate{}
+
+
+\begin{document}
+\maketitle
+
+\subsection{Research in context}\label{research-in-context}
+
+Folic acid is an important B vitamin, with particular importance for
+pregnant women. This vitamin is implicated in proper brain/spinal
+development in newborns. Supplementation of folic acid in pregnant women
+has been shown to reduce the rate of neural tube defects {[}1{]}.
+Certain countries have enacted policies mandating the fortification of
+certain foods with folic acid, while others have not. I aim to quantify
+the effect of these policies, by conducting a difference-in-difference
+analysis.
+
+\subsubsection{Methods}\label{methods}
+
+At a high-level, the difference-in-difference method molds observational
+data into the structure of an experiment/control setup based on
+admistrition of treatment. The treatment effect is then calculated by
+comparing the differences in the slopes of the observed experimental
+group (post-treatment), and the counterfactual slope calculated using
+the slope of the control group. The idea being: we cannot truly observe
+the counterfactual of the experimental group, but using a control group
+that does not experience the treatment is a decent proxy. The
+experimental and control groups will still vary from each other, but
+this method aims to control for these initial differences.
+
+\subsection{Background}\label{background}
+
+This project draws upon my work at IHME. Recently, we have partnered
+with the Food Fortification Initiative (FFI) {[}2{]}, ``an international
+partnership working to improve health through fortification of
+industrially milled grain products''. From their data, I have generated
+a dataset, indexed by country and year, that denotes whether food
+vehicles are mandated to be fortified with folic acid. This dataset
+serves as my dummy-variable for indicating `treatment', with a 0 for
+`no', and a 1 for `yes'. I have selected 15 countries as my initial
+sample, varying by region as well as treatment status.
+
+The measure we will be regressing on is the prevalence of neural tube
+defects per 10,000. I have pulled these values from IHME's current
+`best' models of neural tube defects, for various age/sex groups.
+
+In order to run my analysis, I have created a function that compares 1
+experimental and 1 control country, for a given age and sex. A
+diff-in-diff regression is run for treatment-status on the prevalence of
+neural tube defects. This function returns: 1) a dataframe of
+model-results stemming from the regression equation:
+\[NTDprev_{y,c} = \beta_0 + \beta_y*Year_y + \beta_c*Country_c + \beta_{diff}*(treatment interaction)\]
+for year = y \& country = c, where \(\beta_{diff}\) = the treatment
+effect. And 2) a plot showing the observed data and regression lines of:
+the control group (blue), the pre-treatment experimental group (red),
+and the post-treatment experimental group (green).
+
+\subsubsection{Setup}\label{setup}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list=}\KeywordTok{ls}\NormalTok{())}
+\KeywordTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(}\StringTok{"broom"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+
+\NormalTok{repodir <-}\StringTok{ "J:/temp/chikeda/2018/180606_Jeff_FinalProj/"}\NormalTok{ ##replace with filepath of repo and src folder}
+
+\KeywordTok{source}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(repodir, }\StringTok{"diffindiff_function.R"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Original Computational
+Environment}\label{original-computational-environment}
+
+The example we will look at, will be comparing two South American
+countries, Mexico and Venezuela. Venezuela is the control (blue), never
+having implemented a folic acid fortification initiative, whereas Mexico
+is the experimental group, having implemented a policy mandating the
+fortification of maize in the year 2000. We will be looking at both
+sexes combined, in the Early Neonatal age-group (0-6 days) (note: this
+function takes in IHME specific location/age/sex ids. When trying to get
+the function to take strings as inputs, it was breaking, so I have left
+the syntax as ids. I have provided a data-dictionary. If you would like
+to explore these data, please feel free to change the arguments in the
+diff\_in\_diff function. There are a handful more locations/ages/sexes
+to compare not covered in this narrative.)
+
+\paragraph{Mexico vs.~Venezuela, Both Sexes, Early
+Neonatal}\label{mexico-vs.venezuela-both-sexes-early-neonatal}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{##function arguments: diff_in_diff(control_location, experimental_location, sex_id, age_group_id)}
+\NormalTok{##### if you'd like to analyze different combos, see /data/data_dictionary.csv for explanation of ids and change accordingly}
+
+\KeywordTok{diff_in_diff}\NormalTok{(}\DecValTok{133}\NormalTok{,}\DecValTok{130}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{) ## function sourced from diffindiff_function.R above}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                     term     estimate    std.error  statistic      p.value
+## 1    location_nameMexico 130.23621517 16.252161960   8.013470 1.212190e-10
+## 2 location_nameVenezuela 126.54966751 16.325181011   7.751808 3.146421e-10
+## 3                year_id  -0.06124525  0.008148244  -7.516373 7.443389e-10
+## 4         mean_maize.csv  -2.18639633  0.194263437 -11.254801 1.499704e-15
+\end{verbatim}
+
+\includegraphics{Ikeda_Chad_you_are_what_you_eat_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+But perhaps it is too early to see an effect in the age group of a
+child's first week of life. We also have prevalences for children in the
+Late Neonatal (7-27 days) and Post Neonatal (28-364 days) age groups.
+Let's see if we see any differences here.
+
+\paragraph{Mexico vs.~Venezuela, Both Sexes, Late
+Neonatal}\label{mexico-vs.venezuela-both-sexes-late-neonatal}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{diff_in_diff}\NormalTok{(}\DecValTok{133}\NormalTok{,}\DecValTok{130}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{) ## function sourced from diffindiff_function.R above}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                     term    estimate    std.error  statistic      p.value
+## 1    location_nameMexico 93.69623227 12.200736428   7.679555 4.097038e-10
+## 2 location_nameVenezuela 90.52434811 12.255552901   7.386394 1.198422e-09
+## 3                year_id -0.04363296  0.006117006  -7.133058 3.035920e-09
+## 4         mean_maize.csv -1.66596494  0.145836412 -11.423518 8.609548e-16
+\end{verbatim}
+
+\includegraphics{Ikeda_Chad_you_are_what_you_eat_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\paragraph{Mexico vs.~Venezuela, Both Sexes, Post
+Neonatal}\label{mexico-vs.venezuela-both-sexes-post-neonatal}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{diff_in_diff}\NormalTok{(}\DecValTok{133}\NormalTok{,}\DecValTok{130}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{) ## function sourced from diffindiff_function.R above}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                     term    estimate   std.error  statistic      p.value
+## 1    location_nameMexico 50.51177807 5.985765094   8.438650 2.596722e-11
+## 2 location_nameVenezuela 48.26814708 6.012658432   8.027755 1.150813e-10
+## 3                year_id -0.02301638 0.003001045  -7.669454 4.251163e-10
+## 4         mean_maize.csv -0.83332263 0.071548346 -11.646987 4.151142e-16
+\end{verbatim}
+
+\includegraphics{Ikeda_Chad_you_are_what_you_eat_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\subsubsection{Analysis}\label{analysis}
+
+The coefficients on `mean\_maize.csv' are what we are looking for. I am
+still a bit fuzzy on the interpretation of these coefficients, but do
+see a trend where they are becoming more positive. I would interpret the
+coefficient of `mean\_maize.csv': ``as the treatment variable moves from
+0-\textgreater{}1, we see a decrease in the prevalence of neural tube
+defects''. As these become more positive, I interpret that as: ``the
+effect of folic acid fortification initiatives are most effective the
+younger the child is''.
+
+This would make intuitive sense, as we could be more likely to see
+differences in prevalence at younger age groups, as children with these
+neural tube defects are less likely to live long past birth. We can
+likely capture the best `true' prevalence of these defects at the
+youngest age group.
+
+\subsection{Limitations \& Future
+Directions}\label{limitations-future-directions}
+
+There are MANY ways I'd like to improve this analysis, but believe this
+function to be a good starting point. The biggest limitation is my own
+understanding of the nuances of this method. I was hoping to do a
+multiple diff-in-diff regression, with covariates added in to control
+for country-effects and time-effects. However, I was not able to
+understand how to get that to work in R.
+
+This analysis only shows a two country comparison, but to get a better
+sense of a potential treatment effect, enlarging the country-sample is
+the goal. From my understanding, it is necessary to create
+dummy-variables for treated/non countries that only turns on when that
+country is being analyzed. I believe the same goes for the time-effects
+dummy on year\_ids. Ideally, when comparing all 195 countries \&
+territories that IHME models for, we would be able to see a better
+picture of our `control \& experimental groups'.
+
+The data on food fortification initiatives has data on three food
+vehicles: maize, wheat and rice. In this computational narrative, I
+focused only on maize. According to the FFI's dataset, maize is the most
+common food vehicle to have legislation passed for its mandatory
+fortification. It would be interesting to run analyses using all three
+of these food vehicles.
+
+Even without these personal decisions that narrowed this analysis, the
+next largest limitation would be the data quality itself. The FFI has
+admitted their datasets are not complete, and that the data they do have
+is `questionable' in places. Our IHME estimates have been in particular
+flux this year, and congenital birth defects are notoriously an elusive
+model to work with. We have been undergoing changes in the way we model
+`birth prevalence', and have revamped the way we use inpatient hospital
+data to create our observations. Inpatient hospital data is particularly
+tricky to rely on, as it is biased toward hospital accesibility and
+feasiblity. We can not really know how many children die during birth in
+rural areas, where they cannot be taken to a hospital in time for aid.
+
+Finally, I recognize there are many more controls and covariates that
+this model could use to try and discern a clearer picture with more
+causal strength. I imagine things such as GDP, access to adequate food
+\& water, government functionality or hospital density could all be
+intersting things to control for. When working with human health data in
+the vein of `causality' there are so many things to consider.
+Endogeneity is particularly tough for me to parse out when thinking of
+these controls, as well as whether they are pre or post treatment
+factors.
+
+\subsubsection{Discussion}\label{discussion}
+
+All in all, this course and final project has exposed me to entirely
+novel frameworks of thinking, and has given context to some of the
+grayer aspects of my job at IHME, and our institution as a whole.
+Through going through the motions of this project, I encountered many
+questions that caused me to rethink my analysis. Wondering whether a
+government might even enforce a law such as this, for reasons ranging
+from low-budgets to aversion to scientific suggestion. Even if a
+government decides to enforce a law, whether the manufacturers of said
+food vehicle will even agree to change the way they have always done
+business, and retrain a factory to incorporate this fortification. Even
+if the corporations agree to fortify said food vehicle, wondering
+whether grocery stores may stock this product, if it is at a higher cost
+than the typical non-fortified option. Even if a grocery store does
+agree to stock the fortified food vehicle option, whether the consumer
+will pay the potentially higher cost to purchase the fortified option if
+it is in competion with other more-affordable options. Even if the
+consumer is willing to utilize the fortified food vehicle, will there be
+a grocery store within feasible distance for them to procure the
+product? EVEN if this consumer finally gets a hold of this fortified
+food vehicle, could there be other health-related circumstances that
+prevent their body from taking in nutrients at all (such as diarrhea,
+poor nutrition of the mother when she was a child, previous pregnancies,
+etc.)???
+
+At each step in that chain of questions, I could potentially see a way
+to generate a variable that may high-level attempt to capture that
+variation. But for each of these variables, similar questions of data
+quality would come into play, and it would take much work to collect and
+synthesize these data. I see IHME's role differently now, as one of
+trying to reveal some of these high-level overarching covariates by
+pulling in data from all the sources we can. We try to standardize these
+measures to each other, so that one can potentially think up a model
+that does its best to tame the chaos in observation. I now see just how
+complicated and nuanced this endeavour is, once you know the details
+behind the math. Recently, I do worry about our reporting. It's
+impossible to know how close (if at all) a given model is to the
+`truth', but by espousing estimates and claiming them to be `the most
+true', do we spread false information knowingly\ldots{}.? Based on how
+much data quality is lost at each step, and the fact that our `models'
+take in so many covariates, I worry that our uncertainty propagates
+uncertainty, and by the time you reach a final output, the message has
+been so bastardized that you might as well be saying nothing at all. I
+don't know realistically how you fix this\ldots{}
+
+I think the best thing (and only thing at this juncture) to do, is aim
+for transparency. We need to present our research not as just `here are
+my results, look how pretty they are', but rather as `this was the
+course of my analysis, these are my attempts at controls, and this is
+stepwise how they changed the data'. I have shared this project with my
+team's lead and our congenital defects researcher/modeler. They were
+excited about my analysis, and we hope to refine it for potential use in
+a publication going forward. I am now much more aware of the
+responsibilty on the researcher for using good methods. You will always
+be the most invested and most familiar party with your specific
+research. With that comes the immense responsibility to swallow the
+tough work of pondering through methods and research design, to digest
+your analysis properly for an audience external to yourself. Bad
+research is fodder for exploitative policy; we as researchers are
+already at such a disadvantage toward legislation enaction and
+behavioural change, we need to do the best we can to communicate
+properly.
+
+\paragraph{References}\label{references}
+
+{[}1{]} Czeizel, AE. Prevention of the first occurrence of neural-tube
+defects by periconceptional vitamin supplementation.
+\url{https://www.ncbi.nlm.nih.gov/pubmed/1307234}
+
+{[}2{]} Food Fortification Initiative.
+\url{http://www.ffinetwork.org/about/index.html}
+
+Fortification policy data provided to IHME by Becky Tsang of FFI.
+Dataset generated by Chad Ikeda. Neural Tube Defects prevalence data
+pulled from inpatient hospital claims data, modeled novelly by Lauren
+Wilner, IHME.
+
+
+\end{document}

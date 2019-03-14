@@ -1,0 +1,108 @@
+---
+title: 'You Are What You Eat: An analysis of the efficacy of folic acid food fortification
+  initiatives on the prevalence of neural tube defects in newborns'
+author: "Chad Ikeda"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Research in context
+
+Folic acid is an important B vitamin, with particular importance for pregnant women. This vitamin is implicated in proper brain/spinal development in newborns. Supplementation of folic acid in pregnant women has been shown to reduce the rate of neural tube defects [1]. Certain countries have enacted policies mandating the fortification of certain foods with folic acid, while others have not. I aim to quantify the effect of these policies, by conducting a difference-in-difference analysis.
+
+### Methods
+
+At a high-level, the difference-in-difference method molds observational data into the structure of an experiment/control setup based on admistrition of treatment. The treatment effect is then calculated by comparing the differences in the slopes of the observed experimental group (post-treatment), and the counterfactual slope calculated using the slope of the control group. The idea being: we cannot truly observe the counterfactual of the experimental group, but using a control group that does not experience the treatment is a decent proxy. The experimental and control groups will still vary from each other, but this method aims to control for these initial differences.
+
+## Background
+
+This project draws upon my work at IHME. Recently, we have partnered with the Food Fortification Initiative (FFI) [2], "an international partnership working to improve health through fortification of industrially milled grain products". From their data, I have generated a dataset, indexed by country and year, that denotes whether food vehicles are mandated to be fortified with folic acid. This dataset serves as my dummy-variable for indicating 'treatment', with a 0 for 'no', and a 1 for 'yes'. I have selected 15 countries as my initial sample, varying by region as well as treatment status. 
+
+The measure we will be regressing on is the prevalence of neural tube defects per 10,000. I have pulled these values from IHME's current 'best' models of neural tube defects, for various age/sex groups.
+
+In order to run my analysis, I have created a function that compares 1 experimental and 1 control country, for a given age and sex. A diff-in-diff regression is run for treatment-status on the prevalence of neural tube defects. This function returns: 1) a dataframe of model-results stemming from the regression equation: $$NTDprev_{y,c} = \beta_0 + \beta_y*Year_y + \beta_c*Country_c + \beta_{diff}*(treatment interaction)$$ for year = y & country = c, where $\beta_{diff}$ = the treatment effect. And 2) a plot showing the observed data and regression lines of: the control group (blue), the pre-treatment experimental group (red), and the post-treatment experimental group (green).
+
+
+### Setup
+
+```{r message=FALSE}
+rm(list=ls())
+library("tidyverse")
+library("broom")
+library("ggplot2")
+
+repodir <- "J:/temp/chikeda/2018/180606_Jeff_FinalProj/" ##replace with filepath of repo and src folder
+
+source(paste0(repodir, "diffindiff_function.R"))
+```
+
+## Original Computational Environment
+
+The example we will look at, will be comparing two South American countries, Mexico and Venezuela. Venezuela is the control (blue), never having implemented a folic acid fortification initiative, whereas Mexico is the experimental group, having implemented a policy mandating the fortification of maize in the year 2000. We will be looking at both sexes combined, in the Early Neonatal age-group (0-6 days) (note: this function takes in IHME specific location/age/sex ids. When trying to get the function to take strings as inputs, it was breaking, so I have left the syntax as ids. I have provided a data-dictionary. If you would like to explore these data, please feel free to change the arguments in the diff_in_diff function. There are a handful more locations/ages/sexes to compare not covered in this narrative.)
+
+#### Mexico vs. Venezuela, Both Sexes, Early Neonatal
+
+```{r}
+##function arguments: diff_in_diff(control_location, experimental_location, sex_id, age_group_id)
+##### if you'd like to analyze different combos, see /data/data_dictionary.csv for explanation of ids and change accordingly
+
+diff_in_diff(133,130,3,2) ## function sourced from diffindiff_function.R above
+
+```
+
+But perhaps it is too early to see an effect in the age group of a child's first week of life. We also have prevalences for children in the Late Neonatal (7-27 days) and Post Neonatal (28-364 days) age groups. Let's see if we see any differences here.
+
+#### Mexico vs. Venezuela, Both Sexes, Late Neonatal
+
+```{r}
+diff_in_diff(133,130,3,3) ## function sourced from diffindiff_function.R above
+
+```
+
+#### Mexico vs. Venezuela, Both Sexes, Post Neonatal
+
+```{r}
+diff_in_diff(133,130,3,4) ## function sourced from diffindiff_function.R above
+
+```
+
+### Analysis
+
+The coefficients on 'mean_maize.csv' are what we are looking for. I am still a bit fuzzy on the interpretation of these coefficients, but do see a trend where they are becoming more positive. I would interpret the coefficient of 'mean_maize.csv': "as the treatment variable moves from 0->1, we see a decrease in the prevalence of neural tube defects". As these become more positive, I interpret that as: "the effect of folic acid fortification initiatives are most effective the younger the child is". 
+
+This would make intuitive sense, as we could be more likely to see differences in prevalence at younger age groups, as children with these neural tube defects are less likely to live long past birth. We can likely capture the best 'true' prevalence of these defects at the youngest age group.
+
+## Limitations & Future Directions
+
+There are MANY ways I'd like to improve this analysis, but believe this function to be a good starting point. The biggest limitation is my own understanding of the nuances of this method. I was hoping to do a multiple diff-in-diff regression, with covariates added in to control for country-effects and time-effects. However, I was not able to understand how to get that to work in R.
+
+This analysis only shows a two country comparison, but to get a better sense of a potential treatment effect, enlarging the country-sample is the goal. From my understanding, it is necessary to create dummy-variables for treated/non countries that only turns on when that country is being analyzed. I believe the same goes for the time-effects dummy on year_ids. Ideally, when comparing all 195 countries & territories that IHME models for, we would be able to see a better picture of our 'control & experimental groups'.
+
+The data on food fortification initiatives has data on three food vehicles: maize, wheat and rice. In this computational narrative, I focused only on maize. According to the FFI's dataset, maize is the most common food vehicle to have legislation passed for its mandatory fortification. It would be interesting to run analyses using all three of these food vehicles.
+
+Even without these personal decisions that narrowed this analysis, the next largest limitation would be the data quality itself. The FFI has admitted their datasets are not complete, and that the data they do have is 'questionable' in places. Our IHME estimates have been in particular flux this year, and congenital birth defects are notoriously an elusive model to work with. We have been undergoing changes in the way we model 'birth prevalence', and have revamped the way we use inpatient hospital data to create our observations. Inpatient hospital data is particularly tricky to rely on, as it is biased toward hospital accesibility and feasiblity. We can not really know how many children die during birth in rural areas, where they cannot be taken to a hospital in time for aid.
+
+Finally, I recognize there are many more controls and covariates that this model could use to try and discern a clearer picture with more causal strength. I imagine things such as GDP, access to adequate food & water, government functionality or hospital density could all be intersting things to control for. When working with human health data in the vein of 'causality' there are so many things to consider. Endogeneity is particularly tough for me to parse out when thinking of these controls, as well as whether they are pre or post treatment factors.
+
+### Discussion
+
+All in all, this course and final project has exposed me to entirely novel frameworks of thinking, and has given context to some of the grayer aspects of my job at IHME, and our institution as a whole. Through going through the motions of this project, I encountered many questions that caused me to rethink my analysis. Wondering whether a government might even enforce a law such as this, for reasons ranging from low-budgets to aversion to scientific suggestion. Even if a government decides to enforce a law, whether the manufacturers of said food vehicle will even agree to change the way they have always done business, and retrain a factory to incorporate this fortification. Even if the corporations agree to fortify said food vehicle, wondering whether grocery stores may stock this product, if it is at a higher cost than the typical non-fortified option. Even if a grocery store does agree to stock the fortified food vehicle option, whether the consumer will pay the potentially higher cost to purchase the fortified option if it is in competion with other more-affordable options. Even if the consumer is willing to utilize the fortified food vehicle, will there be a grocery store within feasible distance for them to procure the product? EVEN if this consumer finally gets a hold of this fortified food vehicle, could there be other health-related circumstances that prevent their body from taking in nutrients at all (such as diarrhea, poor nutrition of the mother when she was a child, previous pregnancies, etc.)???
+
+At each step in that chain of questions, I could potentially see a way to generate a variable that may high-level attempt to capture that variation. But for each of these variables, similar questions of data quality would come into play, and it would take much work to collect and synthesize these data. I see IHME's role differently now, as one of trying to reveal some of these high-level overarching covariates by pulling in data from all the sources we can. We try to standardize these measures to each other, so that one can potentially think up a model that does its best to tame the chaos in observation. I now see just how complicated and nuanced this endeavour is, once you know the details behind the math. Recently, I do worry about our reporting. It's impossible to know how close (if at all) a given model is to the 'truth', but by espousing estimates and claiming them to be 'the most true', do we spread false information knowingly....? Based on how much data quality is lost at each step, and the fact that our 'models' take in so many covariates, I worry that our uncertainty propagates uncertainty, and by the time you reach a final output, the message has been so bastardized that you might as well be saying nothing at all.  I don't know realistically how you fix this...
+
+I think the best thing (and only thing at this juncture) to do, is aim for transparency. We need to present our research not as just 'here are my results, look how pretty they are', but rather as 'this was the course of my analysis, these are my attempts at controls, and this is stepwise how they changed the data'. I have shared this project with my team's lead and our congenital defects researcher/modeler. They were excited about my analysis, and we hope to refine it for potential use in a publication going forward. I am now much more aware of the responsibilty on the researcher for using good methods. You will always be the most invested and most familiar party with your specific research. With that comes the immense responsibility to swallow the tough work of pondering through methods and research design, to digest your analysis properly for an audience external to yourself. Bad research is fodder for exploitative policy; we as researchers are already at such a disadvantage toward legislation enaction and behavioural change, we need to do the best we can to communicate properly.
+
+#### References
+
+[1] Czeizel, AE. Prevention of the first occurrence of neural-tube defects by periconceptional vitamin supplementation. https://www.ncbi.nlm.nih.gov/pubmed/1307234 
+
+[2] Food Fortification Initiative. http://www.ffinetwork.org/about/index.html
+
+Fortification policy data provided to IHME by Becky Tsang of FFI. Dataset generated by Chad Ikeda.
+Neural Tube Defects prevalence data pulled from inpatient hospital claims data, modeled novelly by Lauren Wilner, IHME.
+
